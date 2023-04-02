@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-#-------------------------
-# todo: error handling for when trying to create relationship that already exists(follow User controller)
-#-------------------------
-
 # RelationshipsController handles the creation and destruction of relationships
 # between users (followers and followings).
 class RelationshipsController < ApplicationController
