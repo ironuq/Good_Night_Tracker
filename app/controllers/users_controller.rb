@@ -6,13 +6,16 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show followers following friends_sleep_records]
 
   # Retrieves and displays sleep records of a user's friends (mutual followers) from the past week
+  # Retrieves and displays sleep records of a user's friends (mutual followers) from the past week
   def friends_sleep_records
-    friends = User.where(id: @user.following & @user.followers)
-    friends_sleep_records = friends
-                                  .joins(:sleep_records)
-                                  .where('sleep_records.created_at >= ?', 1.week.ago)
-                                  .order(Arel.sql('sleep_records.end_time - sleep_records.start_time DESC'))
-                                  .select('users.*, sleep_records.*')
+    friends = User.joins('INNER JOIN relationships active_relationships ON active_relationships.follower_id = users.id')
+                  .joins('INNER JOIN relationships passive_relationships ON passive_relationships.followed_id = users.id')
+                  .where('active_relationships.followed_id = ? AND passive_relationships.follower_id = ?', @user.id, @user.id)
+
+    friends_sleep_records = friends.joins(:sleep_records)
+                                   .where('sleep_records.created_at >= ?', 1.week.ago)
+                                   .order(Arel.sql('sleep_records.end_time - sleep_records.start_time DESC'))
+                                   .select('users.*, sleep_records.*')
 
     render_success(friends_sleep_records)
   end
