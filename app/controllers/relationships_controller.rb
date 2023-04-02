@@ -10,10 +10,7 @@ class RelationshipsController < ApplicationController
   before_action :set_users, only: %i[create destroy]
   # Create a new relationship between two users (follower and followed)
   def create
-    follower = User.find(params[:follower_id])
-    followed = User.find(params[:followed_id])
-
-    relationship = follower.active_relationships.build(followed_id: followed.id)
+    relationship = @follower.active_relationships.build(followed_id: @followed.id)
 
     if relationship.save
       render json: { status: 'SUCCESS', data: relationship }
@@ -24,7 +21,7 @@ class RelationshipsController < ApplicationController
 
   # Destroy an existing relationship between two users (follower and followed)
   def destroy
-    relationship = Relationship.find_by(follower_id: params[:id], followed_id: params[:followed_id])
+    relationship = Relationship.find_by(follower_id: @follower.id, followed_id: @followed.id)
 
     if relationship.destroy
       render json: { status: 'SUCCESS', data: relationship }
