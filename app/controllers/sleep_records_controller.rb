@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-#-------------------------
-# todo:validation for sleeping records(ex:start_time being later than end_time)
-#-------------------------
-
 # SleepRecordsController handles the creation and listing of sleep records for a specific user.
 class SleepRecordsController < ApplicationController
   before_action :set_user
