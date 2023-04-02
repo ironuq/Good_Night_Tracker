@@ -18,20 +18,20 @@ class UsersController < ApplicationController
 
   # Retrieves and displays the specified user's information
   def show
-    user = User.find(params[:user_id])
+    user = User.find(params[:id])
     render json: { status: 'success', data: user }
   end
 
   # Retrieves and displays a list of a user's followers
   def followers
-    user = User.find(params[:user_id])
+    user = User.find(params[:id])
     followers = user.followers
     render json: followers
   end
 
   # Retrieves and displays a list of users that the specified user is following
   def following
-    user = User.find(params[:user_id])
+    user = User.find(params[:id])
     following = user.following
     render json: following
   end
