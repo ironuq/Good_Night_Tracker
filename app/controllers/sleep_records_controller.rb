@@ -14,7 +14,7 @@ class SleepRecordsController < ApplicationController
     sleep_record = @user.sleep_records.build(sleep_record_params)
 
     if sleep_record.save
-      render_success(sleep_record, status: :success)
+      render_success(sleep_record, status: :created)
     else
       render_error(sleep_record, status: :unprocessable_entity)
     end
@@ -24,7 +24,7 @@ class SleepRecordsController < ApplicationController
   def index
     sleep_records = @user.sleep_records.order(start_time: :desc)
 
-    render_success(sleep_records, status: :success)
+    render_success(sleep_records)
   end
 
   private
