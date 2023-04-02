@@ -45,11 +45,11 @@ class RelationshipsController < ApplicationController
 
   # Render a JSON response indicating success
   def render_success(data)
-    render json: { status: 'SUCCESS', data: data }
+    render json: { status: 'success', data: data }
   end
 
   # Render a JSON response indicating an error
   def render_error(errors)
-    render json: { status: 'ERROR', data: errors }
+    render json: { status: 'success', data: errors }
   end
 end
