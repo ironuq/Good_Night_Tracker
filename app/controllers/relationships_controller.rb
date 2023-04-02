@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 #-------------------------
-# todo: error handlings for when the query and body parameters include non-existing ids
-# todo: error handlings for when trying to delete non-existing relationships
-# todo: error handling for when trying create relationship that already exists
+# todo: error handling for when trying to create relationship that already exists
 #-------------------------
 
 # RelationshipsController handles the creation and destruction of relationships
