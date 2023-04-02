@@ -7,10 +7,11 @@
 # UsersController handles user-related actions
 # such as showing user information, creating new users, and showing followers or following.
 class UsersController < ApplicationController
+  before_action :set_user, only: %i[show followers following friends_sleep_records]
+
   # Retrieves and displays sleep records of a user's friends (mutual followers) from the past week
   def friends_sleep_records
-    user = User.find(params[:id])
-    friends = User.where(id: user.following & user.followers)
+    friends = User.where(id: @user.following & @user.followers)
     friends_sleep_records = friends
                                   .joins(:sleep_records)
                                   .where('sleep_records.created_at >= ?', 1.week.ago)
@@ -22,22 +23,17 @@ class UsersController < ApplicationController
 
   # Retrieves and displays the specified user's information
   def show
-    user = User.find(params[:id])
     render json: { status: 'success', data: user }
   end
 
   # Retrieves and displays a list of a user's followers
   def followers
-    user = User.find(params[:id])
-    followers = user.followers
-    render json: followers
+    render json: @user.followers
   end
 
   # Retrieves and displays a list of users that the specified user is following
   def following
-    user = User.find(params[:id])
-    following = user.following
-    render json: following
+    render json: @user.following
   end
 
   # Creates a new user with the given parameters
@@ -55,5 +51,10 @@ class UsersController < ApplicationController
   # Strong parameters for creating a user
   def user_params
     params.require(:user).permit(:name)
+  end
+
+  # Sets the @user instance variable for the specified actions
+  def set_user
+    @user = User.find(params[:id])
   end
 end
