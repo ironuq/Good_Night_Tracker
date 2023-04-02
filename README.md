@@ -38,8 +38,3 @@ The Sleep Tracker API allows users to track their sleep records and follow other
 - `DELETE /relationships/:id`: Destroy a relationship (unfollow a user)
   - Params: `id` (required), `followed_id` (required)
   - Note:id stands for follower's id
-
-## Error Handling
-
-Error responses have the following format:
-
