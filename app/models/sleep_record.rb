@@ -16,6 +16,6 @@ class SleepRecord < ApplicationRecord
 
   # Custom validation for checking if start_time is before end_time
   def start_time_must_be_before_end_time
-    errors.add(:start_time, 'must be before end_time') if start_time >= end_time
+    errors.add(:start_time, 'start_time must be before end_time') if start_time >= end_time
   end
 end
