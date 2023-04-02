@@ -18,31 +18,31 @@ class UsersController < ApplicationController
                                   .order(Arel.sql('sleep_records.end_time - sleep_records.start_time DESC'))
                                   .select('users.*, sleep_records.*')
 
-    render json: { status: 'success', data: friends_sleep_records }
+    render_success(friends_sleep_records)
   end
 
   # Retrieves and displays the specified user's information
   def show
-    render json: { status: 'success', data: @user }
+    render_success(@user)
   end
 
   # Retrieves and displays a list of a user's followers
   def followers
-    render json: @user.followers
+    render_success(@user.followers)
   end
 
   # Retrieves and displays a list of users that the specified user is following
   def following
-    render json: @user.following
+    render_success(@user.following)
   end
 
   # Creates a new user with the given parameters
   def create
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: :created
+      render_success(@user, status: :created)
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render_error(@user.errors, status: :unprocessable_entity)
     end
   end
 
@@ -56,5 +56,15 @@ class UsersController < ApplicationController
   # Sets the @user instance variable for the specified actions
   def set_user
     @user = User.find(params[:id])
+  end
+
+  # Renders a successful JSON response
+  def render_success(data, options = {})
+    render options.merge(json: { status: 'success', data: data })
+  end
+
+  # Renders an error JSON response
+  def render_error(errors, options = {})
+    render options.merge(json: { status: 'error', data: errors })
   end
 end
