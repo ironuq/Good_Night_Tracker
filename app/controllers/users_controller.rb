@@ -55,7 +55,11 @@ class UsersController < ApplicationController
 
   # Sets the @user instance variable for the specified actions
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(params[:id])
+
+    return if @user
+
+    render_error('User not found', status: :not_found)
   end
 
   # Renders a successful JSON response
