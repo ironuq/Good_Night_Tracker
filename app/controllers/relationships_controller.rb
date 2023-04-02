@@ -11,7 +11,13 @@ class RelationshipsController < ApplicationController
 
   # Create a new relationship between follower and followed
   def create
-    relationship = @follower.active_relationships.build(followed_id: @followed.id)
+    # Check if the relationship already exists
+    existing_relationship = Relationship.find_by(follower_id: @follower.id, followed_id: @followed.id)
+    if existing_relationship
+      # Render an error if the relationship already exists
+      render_error('Relationship already exists')
+      return
+    end
 
     if relationship.save
       render_success(relationship)
