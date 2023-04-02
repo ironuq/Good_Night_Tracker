@@ -15,7 +15,7 @@ class SleepRecordsController < ApplicationController
     if sleep_record.save
       render_success(sleep_record, status: :created)
     else
-      render_error(sleep_record, status: :unprocessable_entity)
+      render_error(sleep_record.errors, status: :unprocessable_entity)
     end
   end
 
