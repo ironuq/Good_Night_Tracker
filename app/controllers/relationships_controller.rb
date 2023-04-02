@@ -11,14 +11,14 @@ class RelationshipsController < ApplicationController
     existing_relationship = Relationship.find_by(follower_id: @follower.id, followed_id: @followed.id)
     if existing_relationship
       # Render an error if the relationship already exists
-      render_error('Relationship already exists')
+      render_error('Relationship already exists', status: :unprocessable_entity)
       return
     end
 
     if relationship.save
-      render_success(relationship)
+      render_success(relationship, status: :created)
     else
-      render_error(relationship.errors)
+      render_error(relationship.errors, status: :unprocessable_entity)
     end
   end
 
@@ -27,7 +27,7 @@ class RelationshipsController < ApplicationController
     relationship = Relationship.find_by(follower_id: @follower.id, followed_id: @followed.id)
 
     if relationship&.destroy
-      render_success(relationship)
+      render_success(relationship, status: :ok)
     else
       render_error(relationship&.errors || 'Relationship not found')
     end
@@ -42,16 +42,16 @@ class RelationshipsController < ApplicationController
 
     return if @follower && @followed
 
-    render_error('User not found')
+    render_error('User not found', status: :not_found)
   end
 
   # Render a JSON response indicating success
-  def render_success(data)
-    render json: { status: 'success', data: data }
+  def render_success(data, options = {})
+    render options.merge(json: { status: 'success', data: data })
   end
 
   # Render a JSON response indicating an error
-  def render_error(errors)
-    render json: { status: 'error', data: errors }
+  def render_error(errors, options = {})
+    render options.merge(json: { status: 'error', data: errors })
   end
 end
