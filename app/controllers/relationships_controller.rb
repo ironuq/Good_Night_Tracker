@@ -18,7 +18,7 @@ class RelationshipsController < ApplicationController
 
   # Destroy an existing relationship between two users (follower and followed)
   def destroy
-    relationship = Relationship.find_by(follower_id: params[:user_id], followed_id: params[:followed_id])
+    relationship = Relationship.find_by(follower_id: params[:id], followed_id: params[:followed_id])
 
     if relationship.destroy
       render json: { status: 'SUCCESS', data: relationship }
