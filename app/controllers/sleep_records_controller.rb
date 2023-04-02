@@ -2,7 +2,6 @@
 
 #-------------------------
 # todo:validation for sleeping records(ex:start_time being later than end_time)
-# todo:error handling for when ask for index on non-existing user
 #-------------------------
 
 # SleepRecordsController handles the creation and listing of sleep records for a specific user.
@@ -31,7 +30,11 @@ class SleepRecordsController < ApplicationController
 
   # Set the user for the current request
   def set_user
-    @user = User.find(params[:user_id])
+    @user = User.find_by(id: params[:user_id])
+
+    return if @user
+
+    render_error('User not found', status: :not_found)
   end
 
   # Strong parameters for creating a sleep record
