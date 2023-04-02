@@ -5,28 +5,30 @@
 # todo: error handlings for when trying to delete non-existing relationships
 #-------------------------
 
-# RelationshipsController handles the creation and deletion of relationships between users.
+# RelationshipsController handles the creation and destruction of relationships
+# between users (followers and followings).
 class RelationshipsController < ApplicationController
   before_action :set_users, only: %i[create destroy]
-  # Create a new relationship between two users (follower and followed)
+
+  # Create a new relationship between follower and followed
   def create
     relationship = @follower.active_relationships.build(followed_id: @followed.id)
 
     if relationship.save
-      render json: { status: 'SUCCESS', data: relationship }
+      render_success(relationship)
     else
-      render json: { status: 'ERROR', data: relationship.errors }
+      render_error(relationship.errors)
     end
   end
 
-  # Destroy an existing relationship between two users (follower and followed)
+  # Destroy an existing relationship follower and followed
   def destroy
     relationship = Relationship.find_by(follower_id: @follower.id, followed_id: @followed.id)
 
-    if relationship.destroy
-      render json: { status: 'SUCCESS', data: relationship }
+    if relationship&.destroy
+      render_success(relationship)
     else
-      render json: { status: 'ERROR', data: relationship.errors }
+      render_error(relationship&.errors || 'Relationship not found')
     end
   end
 
@@ -40,5 +42,15 @@ class RelationshipsController < ApplicationController
     return if @follower && @followed
 
     render_error('User not found')
+  end
+
+  # Render a JSON response indicating success
+  def render_success(data)
+    render json: { status: 'SUCCESS', data: data }
+  end
+
+  # Render a JSON response indicating an error
+  def render_error(errors)
+    render json: { status: 'ERROR', data: errors }
   end
 end
