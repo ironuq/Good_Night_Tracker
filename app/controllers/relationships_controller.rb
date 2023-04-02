@@ -3,6 +3,7 @@
 #-------------------------
 # todo: error handlings for when the query and body parameters include non-existing ids
 # todo: error handlings for when trying to delete non-existing relationships
+# todo: error handling for when trying create relationship that already exists
 #-------------------------
 
 # RelationshipsController handles the creation and destruction of relationships
@@ -36,6 +37,7 @@ class RelationshipsController < ApplicationController
 
   # Set the follower and followed users
   def set_users
+    # FIXME: follower_id should be id
     @follower = User.find_by(id: params[:follower_id])
     @followed = User.find_by(id: params[:followed_id])
 
