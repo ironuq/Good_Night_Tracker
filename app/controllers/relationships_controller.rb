@@ -37,8 +37,7 @@ class RelationshipsController < ApplicationController
 
   # Set the follower and followed users
   def set_users
-    # FIXME: follower_id should be id
-    @follower = User.find_by(id: params[:follower_id])
+    @follower = User.find_by(id: params[:id])
     @followed = User.find_by(id: params[:followed_id])
 
     return if @follower && @followed
