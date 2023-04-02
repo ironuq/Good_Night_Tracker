@@ -7,6 +7,7 @@
 
 # RelationshipsController handles the creation and deletion of relationships between users.
 class RelationshipsController < ApplicationController
+  before_action :set_users, only: %i[create destroy]
   # Create a new relationship between two users (follower and followed)
   def create
     follower = User.find(params[:follower_id])
@@ -30,5 +31,17 @@ class RelationshipsController < ApplicationController
     else
       render json: { status: 'ERROR', data: relationship.errors }
     end
+  end
+
+  private
+
+  # Set the follower and followed users
+  def set_users
+    @follower = User.find_by(id: params[:follower_id])
+    @followed = User.find_by(id: params[:followed_id])
+
+    return if @follower && @followed
+
+    render_error('User not found')
   end
 end
