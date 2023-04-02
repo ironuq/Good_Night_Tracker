@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 
   # Sets the @user instance variable for the specified actions
   def set_user
-    @user = User.find_by(params[:id])
+    @user = User.find_by(id: params[:id])
 
     return if @user
 
