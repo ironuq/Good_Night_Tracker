@@ -9,7 +9,7 @@
 class UsersController < ApplicationController
   # Retrieves and displays sleep records of a user's friends (mutual followers) from the past week
   def friends_sleep_records
-    user = User.find(params[:user_id])
+    user = User.find(params[:id])
     friends = User.where(user_id: user.following & user.followers)
     friends_sleep_records = friends
                                   .joins(:sleep_records)
