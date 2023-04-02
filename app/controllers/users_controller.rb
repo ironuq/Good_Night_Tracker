@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   # Retrieves and displays the specified user's information
   def show
-    render json: { status: 'success', data: user }
+    render json: { status: 'success', data: @user }
   end
 
   # Retrieves and displays a list of a user's followers
