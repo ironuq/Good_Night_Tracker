@@ -15,6 +15,8 @@ class RelationshipsController < ApplicationController
       return
     end
 
+    relationship = @follower.active_relationships.build(followed_id: @followed.id)
+
     if relationship.save
       render_success(relationship, status: :created)
     else
