@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+#-------------------------
+# todo:error handling for when asking for non-existing id
+#-------------------------
+
 # UsersController handles user-related actions
 # such as showing user information, creating new users, and showing followers or following.
 class UsersController < ApplicationController

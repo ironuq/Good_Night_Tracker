@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+#-------------------------
+# todo: error handlings for when the query and body parameters include non-existing ids
+# todo: error handlings for when trying to delete non-existing relationships
+#-------------------------
+
 # RelationshipsController handles the creation and deletion of relationships between users.
 class RelationshipsController < ApplicationController
   # Create a new relationship between two users (follower and followed)
