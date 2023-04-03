@@ -39,7 +39,7 @@ The Sleep Tracker API allows users to track their sleep records and follow other
   - Params: `id` (required), `followed_id` (required)
   - Note:id stands for follower's id
 
-### Postman Collection
+## Postman Collection
 
   - Include postman collection to all the endpoints of this API.
   - https://gist.github.com/ironuq/9479503c0d44faf6d89b2d409c8a8448
